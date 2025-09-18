@@ -1,96 +1,591 @@
-<!-- templates/input.html -->
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Input - BigMart MRP Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: Arial, sans-serif;
-        background: #f5f5f5;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
       }
+
+      /* Animated background elements */
+      .bg-animation {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .floating-shape {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 50%;
+        animation: float 8s ease-in-out infinite;
+      }
+
+      .shape1 {
+        width: 200px;
+        height: 200px;
+        top: 10%;
+        left: -10%;
+        animation-delay: 0s;
+      }
+
+      .shape2 {
+        width: 150px;
+        height: 150px;
+        top: 60%;
+        right: -10%;
+        animation-delay: 2s;
+      }
+
+      .shape3 {
+        width: 100px;
+        height: 100px;
+        top: 80%;
+        left: 20%;
+        animation-delay: 4s;
+      }
+
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0px) translateX(0px) rotate(0deg);
+          opacity: 0.3;
+        }
+        33% {
+          transform: translateY(-30px) translateX(20px) rotate(120deg);
+          opacity: 0.6;
+        }
+        66% {
+          transform: translateY(30px) translateX(-20px) rotate(240deg);
+          opacity: 0.4;
+        }
+      }
+
+      /* Main container */
       .container {
-        background: white;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        width: 400px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 50px 40px;
+        box-shadow: 
+          0 25px 50px rgba(0, 0, 0, 0.15),
+          0 0 0 1px rgba(255, 255, 255, 0.3);
+        width: 100%;
+        max-width: 500px;
+        position: relative;
+        z-index: 10;
+        animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
       }
-      h1 {
+
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(60px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* Header */
+      .header {
         text-align: center;
-        margin-bottom: 20px;
-        color: #333;
+        margin-bottom: 40px;
       }
+
+      .back-button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: rgba(102, 126, 234, 0.1);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: #667eea;
+        transition: all 0.3s ease;
+        animation: fadeIn 1s ease-out 0.5s both;
+      }
+
+      .back-button:hover {
+        background: rgba(102, 126, 234, 0.2);
+        transform: translateX(-2px);
+      }
+
+      h1 {
+        color: #1a202c;
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        letter-spacing: -0.025em;
+        animation: fadeInDown 0.8s ease-out 0.2s both;
+      }
+
+      .subtitle {
+        color: #4a5568;
+        font-size: 1rem;
+        font-weight: 400;
+        animation: fadeInDown 0.8s ease-out 0.4s both;
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      /* Form styling */
+      .form {
+        animation: fadeInUp 0.8s ease-out 0.6s both;
+      }
+
+      .form-group {
+        margin-bottom: 24px;
+        animation: slideInLeft 0.6s ease-out both;
+      }
+
+      .form-group:nth-child(1) { animation-delay: 0.8s; }
+      .form-group:nth-child(2) { animation-delay: 0.9s; }
+      .form-group:nth-child(3) { animation-delay: 1.0s; }
+      .form-group:nth-child(4) { animation-delay: 1.1s; }
+      .form-group:nth-child(5) { animation-delay: 1.2s; }
+      .form-group:nth-child(6) { animation-delay: 1.3s; }
+
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
       label {
         display: block;
-        margin-top: 10px;
-        font-weight: bold;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #2d3748;
+        font-size: 0.95rem;
+        letter-spacing: 0.025em;
+        transition: color 0.3s ease;
       }
+
+      .input-wrapper {
+        position: relative;
+      }
+
       input, select {
         width: 100%;
-        padding: 8px;
-        margin-top: 5px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+        padding: 16px 20px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #2d3748;
+        background: #ffffff;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        outline: none;
+        font-family: 'JetBrains Mono', monospace;
       }
-      button {
-        margin-top: 20px;
+
+      input:focus, select:focus {
+        border-color: #667eea;
+        box-shadow: 
+          0 0 0 3px rgba(102, 126, 234, 0.1),
+          0 4px 12px rgba(102, 126, 234, 0.15);
+        transform: translateY(-1px);
+      }
+
+      input:hover, select:hover {
+        border-color: #cbd5e0;
+        transform: translateY(-1px);
+      }
+
+      /* Custom select arrow */
+      select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 16px center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+        padding-right: 50px;
+      }
+
+      select:focus {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23667eea' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      }
+
+      /* Input icons */
+      .input-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        font-size: 18px;
+        pointer-events: none;
+        transition: color 0.3s ease;
+      }
+
+      .has-icon input {
+        padding-left: 50px;
+      }
+
+      .form-group:focus-within .input-icon {
+        color: #667eea;
+      }
+
+      /* Submit button */
+      .submit-btn {
         width: 100%;
-        padding: 10px;
-        background: #007bff;
-        color: white;
+        padding: 18px 24px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border: none;
-        border-radius: 5px;
-        font-size: 16px;
+        border-radius: 14px;
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 600;
         cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 
+          0 8px 25px rgba(102, 126, 234, 0.3),
+          0 0 0 0 rgba(102, 126, 234, 0.4);
+        position: relative;
+        overflow: hidden;
+        animation: fadeInUp 0.8s ease-out 1.4s both;
+        margin-top: 32px;
       }
-      button:hover {
-        background: #0056b3;
+
+      .submit-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.6s;
+      }
+
+      .submit-btn:hover::before {
+        left: 100%;
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+          0 12px 35px rgba(102, 126, 234, 0.4),
+          0 0 0 4px rgba(102, 126, 234, 0.1);
+      }
+
+      .submit-btn:active {
+        transform: translateY(0);
+      }
+
+      .btn-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .btn-icon {
+        font-size: 20px;
+        transition: transform 0.3s ease;
+      }
+
+      .submit-btn:hover .btn-icon {
+        transform: translateX(4px);
+      }
+
+      /* Loading state */
+      .loading {
+        pointer-events: none;
+        opacity: 0.8;
+      }
+
+      .loading .btn-text {
+        opacity: 0.7;
+      }
+
+      .loading .btn-icon {
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      /* Progress bar */
+      .progress-bar {
+        width: 100%;
+        height: 4px;
+        background: #e2e8f0;
+        border-radius: 2px;
+        margin-bottom: 40px;
+        overflow: hidden;
+        animation: fadeIn 0.8s ease-out 0.8s both;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 2px;
+        animation: fillProgress 2s ease-out 1s both;
+      }
+
+      @keyframes fillProgress {
+        from { width: 0%; }
+        to { width: 100%; }
+      }
+
+      /* Responsive design */
+      @media (max-width: 640px) {
+        .container {
+          padding: 40px 30px;
+          margin: 10px;
+          border-radius: 20px;
+        }
+
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        .back-button {
+          top: 15px;
+          left: 15px;
+        }
+
+        input, select {
+          padding: 14px 16px;
+        }
+
+        .has-icon input {
+          padding-left: 46px;
+        }
+
+        .input-icon {
+          left: 14px;
+        }
+      }
+
+      /* Focus trap for better accessibility */
+      .form-group:focus-within label {
+        color: #667eea;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #667eea;
+        border-radius: 4px;
       }
     </style>
   </head>
   <body>
+    <div class="bg-animation">
+      <div class="floating-shape shape1"></div>
+      <div class="floating-shape shape2"></div>
+      <div class="floating-shape shape3"></div>
+    </div>
+
     <div class="container">
-      <h1>Enter Product Details</h1>
-      <form method="post" action="/predict">
-        
-        <label for="Weight">Weight:</label>
-        <input type="number" step="any" id="Weight" name="Weight" required />
-        
-        <label for="FatContent">Fat Content:</label>
-        <select id="FatContent" name="FatContent" required>
-          {% for opt in fat_options %}
-            <option value="{{ opt }}">{{ opt }}</option>
-          {% endfor %}
-        </select>
-        
-        <label for="ProductVisibility">Product Visibility:</label>
-        <input type="number" step="any" id="ProductVisibility" name="ProductVisibility" required />
-        
-        <label for="ProductType">Product Type:</label>
-        <select id="ProductType" name="ProductType" required>
-          {% for opt in product_options %}
-            <option value="{{ opt }}">{{ opt }}</option>
-          {% endfor %}
-        </select>
-        
-        <label for="EstablishmentYear">Establishment Year:</label>
-        <input type="number" id="EstablishmentYear" name="EstablishmentYear" required />
-        
-        <label for="OutletSize">Outlet Size:</label>
-        <select id="OutletSize" name="OutletSize" required>
-          {% for opt in outlet_options %}
-            <option value="{{ opt }}">{{ opt }}</option>
-          {% endfor %}
-        </select>
-        
-        <button type="submit">Predict MRP</button>
+      <button class="back-button" onclick="history.back()">←</button>
+      
+      <div class="header">
+        <h1>Product Details</h1>
+        <p class="subtitle">Enter the information below to predict MRP</p>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+
+      <form method="post" action="/predict" class="form">
+        <div class="form-group">
+          <label for="Weight">Product Weight (kg)</label>
+          <div class="input-wrapper has-icon">
+            <span class="input-icon">⚖️</span>
+            <input type="number" step="any" id="Weight" name="Weight" placeholder="0.00" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="FatContent">Fat Content Level</label>
+          <div class="input-wrapper">
+            <select id="FatContent" name="FatContent" required>
+              <option value="">Select fat content...</option>
+              {% for opt in fat_options %}
+                <option value="{{ opt }}">{{ opt }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="ProductVisibility">Product Visibility Score</label>
+          <div class="input-wrapper has-icon">
+            <span class="input-icon">👁️</span>
+            <input type="number" step="any" id="ProductVisibility" name="ProductVisibility" placeholder="0.000" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="ProductType">Product Category</label>
+          <div class="input-wrapper">
+            <select id="ProductType" name="ProductType" required>
+              <option value="">Select product type...</option>
+              {% for opt in product_options %}
+                <option value="{{ opt }}">{{ opt }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="EstablishmentYear">Establishment Year</label>
+          <div class="input-wrapper has-icon">
+            <span class="input-icon">📅</span>
+            <input type="number" id="EstablishmentYear" name="EstablishmentYear" placeholder="2020" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="OutletSize">Outlet Size Category</label>
+          <div class="input-wrapper">
+            <select id="OutletSize" name="OutletSize" required>
+              <option value="">Select outlet size...</option>
+              {% for opt in outlet_options %}
+                <option value="{{ opt }}">{{ opt }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn" onclick="this.classList.add('loading')">
+          <span class="btn-text">
+            <span>Predict MRP</span>
+            <span class="btn-icon">🚀</span>
+          </span>
+        </button>
       </form>
     </div>
+
+    <script>
+      // Enhanced form interactions
+      document.addEventListener('DOMContentLoaded', function() {
+        const inputs = document.querySelectorAll('input, select');
+        
+        inputs.forEach(input => {
+          // Add floating label effect
+          input.addEventListener('focus', function() {
+            this.parentElement.parentElement.classList.add('focused');
+          });
+          
+          input.addEventListener('blur', function() {
+            if (!this.value) {
+              this.parentElement.parentElement.classList.remove('focused');
+            }
+          });
+
+          // Add input validation feedback
+          input.addEventListener('input', function() {
+            if (this.checkValidity()) {
+              this.style.borderColor = '#10b981';
+              this.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)';
+            } else {
+              this.style.borderColor = '#ef4444';
+              this.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
+            }
+          });
+        });
+
+        // Form submission handling
+        const form = document.querySelector('.form');
+        const submitBtn = document.querySelector('.submit-btn');
+        
+        form.addEventListener('submit', function(e) {
+          submitBtn.classList.add('loading');
+          submitBtn.querySelector('.btn-icon').textContent = '⏳';
+        });
+      });
+
+      // Smooth scroll and focus management
+      function focusNextInput() {
+        const inputs = Array.from(document.querySelectorAll('input, select'));
+        const currentFocus = document.activeElement;
+        const currentIndex = inputs.indexOf(currentFocus);
+        
+        if (currentIndex < inputs.length - 1) {
+          inputs[currentIndex + 1].focus();
+        }
+      }
+
+      // Add keyboard navigation
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          focusNextInput();
+        }
+      });
+    </script>
   </body>
 </html>

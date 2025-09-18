@@ -1,37 +1,423 @@
-<!-- templates/welcome.html -->
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Welcome - BigMart MRP Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: Arial, sans-serif;
-        background: #f5f5f5;
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Animated background particles */
+      .particles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+      .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+      .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+      .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+      .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+      .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+      .particle:nth-child(7) { left: 70%; animation-delay: 0.5s; }
+      .particle:nth-child(8) { left: 80%; animation-delay: 1.5s; }
+      .particle:nth-child(9) { left: 90%; animation-delay: 2.5s; }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+      }
+
+      /* Main container */
+      .container {
+        position: relative;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 24px;
+        padding: 60px 40px;
+        max-width: 600px;
+        width: 90%;
         text-align: center;
-        padding: 50px;
+        box-shadow: 
+          0 25px 50px rgba(0, 0, 0, 0.1),
+          0 0 0 1px rgba(255, 255, 255, 0.1);
+        animation: slideUp 1s ease-out, glow 3s ease-in-out infinite alternate;
       }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes glow {
+        from {
+          box-shadow: 
+            0 25px 50px rgba(0, 0, 0, 0.1),
+            0 0 0 1px rgba(255, 255, 255, 0.1),
+            0 0 30px rgba(255, 255, 255, 0.1);
+        }
+        to {
+          box-shadow: 
+            0 25px 50px rgba(0, 0, 0, 0.2),
+            0 0 0 1px rgba(255, 255, 255, 0.2),
+            0 0 40px rgba(255, 255, 255, 0.2);
+        }
+      }
+
+      /* Logo/Icon */
+      .logo {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        border-radius: 50%;
+        margin: 0 auto 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        color: white;
+        box-shadow: 0 15px 30px rgba(238, 90, 36, 0.3);
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+          box-shadow: 0 15px 30px rgba(238, 90, 36, 0.3);
+        }
+        50% {
+          transform: scale(1.05);
+          box-shadow: 0 20px 40px rgba(238, 90, 36, 0.4);
+        }
+      }
+
       h1 {
-        color: #333;
+        font-family: 'Poppins', sans-serif;
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 700;
+        color: white;
+        margin-bottom: 20px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        letter-spacing: -0.02em;
+        animation: textShimmer 3s ease-in-out infinite;
       }
-      a {
+
+      @keyframes textShimmer {
+        0%, 100% {
+          background: linear-gradient(90deg, #fff 0%, #fff 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        50% {
+          background: linear-gradient(90deg, #fff 0%, #f0f0f0 50%, #fff 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 40px;
+        font-weight: 300;
+        line-height: 1.6;
+        animation: fadeInUp 1s ease-out 0.3s both;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Enhanced button */
+      .cta-button {
         display: inline-block;
-        margin-top: 20px;
-        padding: 10px 20px;
-        background: #007bff;
+        position: relative;
+        padding: 18px 40px;
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
         color: white;
         text-decoration: none;
-        border-radius: 5px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+        box-shadow: 0 15px 30px rgba(238, 90, 36, 0.3);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        overflow: hidden;
+        animation: fadeInUp 1s ease-out 0.6s both;
       }
-      a:hover {
-        background: #0056b3;
+
+      .cta-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.6s;
+      }
+
+      .cta-button:hover::before {
+        left: 100%;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(238, 90, 36, 0.4);
+        background: linear-gradient(135deg, #ff5252, #d84315);
+      }
+
+      .cta-button:active {
+        transform: translateY(-1px) scale(1.01);
+      }
+
+      /* Features section */
+      .features {
+        margin-top: 40px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+        animation: fadeInUp 1s ease-out 0.9s both;
+      }
+
+      .feature {
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .feature:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-icon {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      .feature-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 5px;
+      }
+
+      .feature-desc {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.4;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 40px 30px;
+          margin: 20px;
+        }
+        
+        .features {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+      }
+
+      /* Additional floating elements */
+      .floating-shape {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        animation: floatShape 8s ease-in-out infinite;
+      }
+
+      .shape1 {
+        width: 60px;
+        height: 60px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+      }
+
+      .shape2 {
+        width: 40px;
+        height: 40px;
+        top: 60%;
+        right: 15%;
+        animation-delay: 2s;
+      }
+
+      .shape3 {
+        width: 80px;
+        height: 80px;
+        bottom: 20%;
+        left: 20%;
+        animation-delay: 4s;
+      }
+
+      @keyframes floatShape {
+        0%, 100% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 0.3;
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+          opacity: 0.6;
+        }
       }
     </style>
   </head>
   <body>
-    <h1>Welcome to BigMart MRP Predictor</h1>
-    <p>This app predicts the MRP of a product based on input details.</p>
-    <a href="/input">Go to Input Page</a>
+    <!-- Animated background particles -->
+    <div class="particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+
+    <!-- Floating shapes -->
+    <div class="floating-shape shape1"></div>
+    <div class="floating-shape shape2"></div>
+    <div class="floating-shape shape3"></div>
+
+    <div class="container">
+      <div class="logo">📊</div>
+      
+      <h1>BigMart MRP Predictor</h1>
+      
+      <p class="subtitle">
+        Harness the power of AI to predict Maximum Retail Prices with precision. 
+        Make data-driven decisions for your business success.
+      </p>
+      
+      <a href="/input" class="cta-button">
+        Start Predicting Now
+      </a>
+
+      <div class="features">
+        <div class="feature">
+          <span class="feature-icon">🎯</span>
+          <div class="feature-title">Accurate</div>
+          <div class="feature-desc">ML-powered predictions with high precision</div>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">⚡</span>
+          <div class="feature-title">Fast</div>
+          <div class="feature-desc">Get instant results in seconds</div>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">📈</span>
+          <div class="feature-title">Smart</div>
+          <div class="feature-desc">Advanced algorithms for better insights</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Add some interactive sparkle effect on mouse movement
+      document.addEventListener('mousemove', function(e) {
+        if (Math.random() > 0.8) {
+          createSparkle(e.clientX, e.clientY);
+        }
+      });
+
+      function createSparkle(x, y) {
+        const sparkle = document.createElement('div');
+        sparkle.style.position = 'fixed';
+        sparkle.style.left = x + 'px';
+        sparkle.style.top = y + 'px';
+        sparkle.style.width = '6px';
+        sparkle.style.height = '6px';
+        sparkle.style.background = 'rgba(255, 255, 255, 0.8)';
+        sparkle.style.borderRadius = '50%';
+        sparkle.style.pointerEvents = 'none';
+        sparkle.style.zIndex = '1000';
+        sparkle.style.animation = 'sparkleAnim 1s ease-out forwards';
+        
+        document.body.appendChild(sparkle);
+        
+        setTimeout(() => {
+          document.body.removeChild(sparkle);
+        }, 1000);
+      }
+
+      // Add sparkle animation
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes sparkleAnim {
+          0% {
+            transform: scale(0) rotate(0deg);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1) rotate(180deg);
+            opacity: 1;
+          }
+          100% {
+            transform: scale(0) rotate(360deg);
+            opacity: 0;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    </script>
   </body>
 </html>
